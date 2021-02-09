@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @request.name %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @request.url %>
+</p>
+
+<p>
+  <strong>Method:</strong>
+  <%= @request.method %>
+</p>
+
+<p>
+  <strong>Content type:</strong>
+  <%= @request.content_type %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @request.body %>
+</p>
+
+<p>
+  <strong>Folder:</strong>
+  <%= @request.folder_id %>
+</p>
+
+<%= link_to 'Edit', edit_request_path(@request) %> |
+<%= link_to 'Back', requests_path %> |
+<%= link_to 'Run', run_request_path(@request), method: :post, remote: true %>
+
+<div id="run-result">
+
+</div>

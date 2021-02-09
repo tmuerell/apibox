@@ -1,0 +1,19 @@
+<h3>Response</h3>
+
+<p>Status: <%= @resp.status %>
+
+<p>Headers:</p>
+
+<ul>
+<% for h in @resp.headers %>
+    <li><%= h[0] %>: <%= h[1] %></li>
+<% end %>
+</ul>
+
+<p>Body</p>
+
+<pre>
+    <%= @resp.body %>
+</pre>
+
+<%= debug(@resp) %>

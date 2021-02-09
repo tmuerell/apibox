@@ -1,0 +1,19 @@
+
+<%= simple_form_for(@request) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :url %>
+    <%= f.input :method %>
+    <%= f.input :content_type %>
+    <%= f.input :body %>
+    <%= f.association :folder %>
+    <%= f.association :certificate %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

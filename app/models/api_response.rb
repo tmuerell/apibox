@@ -24,4 +24,13 @@ class ApiResponse
             ""
         end
     end
+
+    def pretty_body
+        if lang == "json"
+            obj = JSON.parse(body)
+            JSON.pretty_unparse(obj)
+        else
+            body
+        end
+    end
 end

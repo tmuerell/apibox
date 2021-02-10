@@ -1,39 +1,37 @@
-<p id="notice"><%= notice %></p>
+<h2><%= @request.name %></h2>
 
-<p>
-  <strong>Name:</strong>
-  <%= @request.name %>
-</p>
+<div class="card">
+    <div class="card-header">
+        Request
+    </div>
 
-<p>
-  <strong>Url:</strong>
-  <%= @request.url %>
-</p>
+    <div class="card-body">
+        <p>
+            <strong>Url:</strong>
+            <%= @request.url %>
+        </p>
 
-<p>
-  <strong>Method:</strong>
-  <%= @request.method %>
-</p>
+        <p>
+            <strong>Method:</strong>
+            <%= @request.method %>
+        </p>
 
-<p>
-  <strong>Content type:</strong>
-  <%= @request.content_type %>
-</p>
+        <% if @request.method.post? || @request.method.put? || @request.method.patch? %>
 
-<p>
-  <strong>Body:</strong>
-  <%= @request.body %>
-</p>
+        <p>
+            <strong>Content type:</strong>
+            <%= @request.content_type %>
+        </p>
 
-<p>
-  <strong>Folder:</strong>
-  <%= @request.folder_id %>
-</p>
-
-<%= link_to 'Edit', edit_request_path(@request) %> |
-<%= link_to 'Back', requests_path %> |
-<%= link_to 'Run', run_request_path(@request), method: :post, remote: true %>
-
+        <p>
+            <strong>Body:</strong>
+            <pre><code class="<%= @request.lang %>"><%= @request.body %></code></pre>
+            
+        </p>
+        <% end %>
+        <%= link_to 'Run Request', run_request_path(@request), method: :post, remote: true, class: 'btn btn-success' %>
+    </div>
+</div>
 <div id="run-result">
-
+    x
 </div>

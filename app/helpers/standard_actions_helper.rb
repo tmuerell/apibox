@@ -23,32 +23,32 @@ module StandardActionsHelper
       case params[:action]
       when "index"
         if can?(:create, model.classify.constantize)
-          ret += link_to(_t("new"), {:action => :new}, :class => 'button is-primary')
+          ret += link_to(_t("new"), {:action => :new}, :class => 'btn btn-primary')
           ret += " "
         end
       when "edit"
         if can? :read, iv
-          ret += link_to(_t("show"), iv, :class => 'button')
+          ret += link_to(_t("show"), iv, :class => 'btn btn-light')
           ret += " "
-          ret += link_to(_t("back"), {:action => :index}, :class => 'button')
+          ret += link_to(_t("back"), {:action => :index}, :class => 'btn btn-light')
           ret += " "
         end
       when "new"
         if can? :read, iv
-          ret += link_to(_t("back"), {:action => :index}, :class => 'button')
+          ret += link_to(_t("back"), {:action => :index}, :class => 'btn btn-light')
           ret += " "
         end
       when "show"
         if can? :edit, iv
-          ret += link_to(_t("edit"), {:action => :edit, :id => iv}, :class => 'button')
+          ret += link_to(_t("edit"), {:action => :edit, :id => iv}, :class => 'btn btn-light')
           ret += " "
         end
         if can? :destroy, iv
-          ret += link_to(_t("delete"), iv, data: { confirm: t('are_you_sure') }, :method => :delete, :class => 'button is-danger')
+          ret += link_to(_t("delete"), iv, data: { confirm: t('are_you_sure') }, :method => :delete, :class => 'btn btn-danger')
           ret += " "
         end
         if can? :read, iv
-          ret += link_to(_t("back"), {:action => :index}, :class => 'button')
+          ret += link_to(_t("back"), {:action => :index}, :class => 'btn btn-light')
           ret += " "
         end
       end
@@ -61,15 +61,15 @@ module StandardActionsHelper
       ret = ""
   
       if can? :show, v
-        ret += link_to(icons ? icon('show') : _t("show"), {:action => :show, :id => v}, :class => 'button is-small')
+        ret += link_to(icons ? icon('show') : _t("show"), {:action => :show, :id => v}, :class => 'btn btn-sm btn-light')
         ret += " "
       end
       if can? :edit, v
-        ret += link_to(icons ? icon('edit') : _t("edit"), {:action => :edit, :id => v}, :class => 'button is-small')
+        ret += link_to(icons ? icon('edit') : _t("edit"), {:action => :edit, :id => v}, :class => 'btn btn-sm btn-light')
         ret += " "
       end
       if can? :destroy, v
-        ret += link_to(icons ? icon('trash') : _t("delete"), v, data: { confirm: t('are_you_sure') }, :method => :delete, :class => 'button is-small is-danger')
+        ret += link_to(icons ? icon('trash') : _t("delete"), v, data: { confirm: t('are_you_sure') }, :method => :delete, :class => 'btn btn-sm btn-danger')
         ret += " "
       end
       ret.html_safe

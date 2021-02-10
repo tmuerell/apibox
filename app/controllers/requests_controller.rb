@@ -23,15 +23,17 @@ class RequestsController < ApplicationController
     end
 
     if @request.method.get?
-      @resp = f.get(@request.url)
+      resp = f.get(@request.url)
     elsif @request.method.post?
-      @resp = f.post(
+      resp = f.post(
         @request.url,
         @request.body,
         "Content-Type" => @request.content_type)
     else
       raise "Invalid method #{@request.method}"
     end
+
+    @resp = ApiResponse.new(resp)
 
     respond_to do |format|
       format.js

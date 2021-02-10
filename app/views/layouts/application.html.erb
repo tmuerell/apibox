@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Apibox</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,7 +12,12 @@
   </head>
 
   <body>
+    <%= render 'layouts/navbar' %>
+    <main>
+    <div class="container">
     <%= yield %>
     <%= content_for?(:actions) ? yield(:actions) : standard_actions %>
+    </div>
+    </main>
   </body>
 </html>

@@ -1,14 +1,11 @@
-<h1>Requests</h1>
+<h2>Requests</h2>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Name</th>
       <th>Url</th>
       <th>Method</th>
-      <th>Content type</th>
-      <th>Body</th>
-      <th>Folder</th>
       <th></th>
     </tr>
   </thead>
@@ -19,9 +16,6 @@
         <td><%= request.name %></td>
         <td><%= request.url %></td>
         <td><%= request.method %></td>
-        <td><%= request.content_type %></td>
-        <td><%= request.body %></td>
-        <td><%= request.folder_id %></td>
         <td><%= list_actions(request) %></td>
       </tr>
     <% end %>

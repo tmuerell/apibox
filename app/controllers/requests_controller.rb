@@ -27,20 +27,20 @@ class RequestsController < ApplicationController
     for h in @request.request_headers
       headers[h.name] = h.value
     end
-    params = {}
+    request_params = {}
     for p in @request.request_params
-      if params[p.name]
-        if !params[p.name].kind_of?(Array)
-          params[p.name] = [ params[p.name] ]
+      if request_params[p.name]
+        if !request_params[p.name].kind_of?(Array)
+          request_params[p.name] = [ request_params[p.name] ]
         end
-        params[p.name] << p.value
+        request_params[p.name] << p.value
       else
-        params[p.name] = p.value
+        request_params[p.name] = p.value
       end
     end
 
     if @request.method.get?
-      resp = f.get(@request.url, params, headers)
+      resp = f.get(@request.url, request_params, headers)
     elsif @request.method.post?
       resp = f.post(
         @request.url,
@@ -51,6 +51,7 @@ class RequestsController < ApplicationController
     end
 
     @resp = ApiResponse.new(resp)
+    @debug = params[:debug]
 
     respond_to do |format|
       format.js

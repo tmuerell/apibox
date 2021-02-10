@@ -18,15 +18,9 @@
     </div>
     </div>
 
-<p>
-  <a class="btn btn-secondary" data-toggle="collapse" href="#collapseDebug" role="button" aria-expanded="false" aria-controls="collapseDebug">
-    Show debug
-  </a>
-</p>
-<div class="collapse" id="collapseDebug">
-  <div class="card card-body">
+    <% if @debug %>
       <pre><%= debug(@resp.raw) %></pre>
-  </div>
+    <% end %>
 </div>
 
 

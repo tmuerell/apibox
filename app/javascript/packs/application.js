@@ -4,15 +4,30 @@
 // that code so it'll be compiled.
 
 import Rails from "@rails/ujs"
-//import Turbolinks from "turbolinks"
+import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import hljs from 'highlight.js'
 
 Rails.start()
-//Turbolinks.start()
+Turbolinks.start()
 ActiveStorage.start()
 hljs.highlightAll()
+
+document.addEventListener("load", function() {
+    console.log('It works on each visit!');
+    hljs.highlightAll();
+})
+
+document.addEventListener("turbolinks:load", function() {
+    console.log('It works on each visit!');
+    hljs.highlightAll();
+})
+
+document.addEventListener("ajax:success", function() {
+    console.log('It works on each ajax!');
+    hljs.highlightAll();
+})
 
 export {
     hljs

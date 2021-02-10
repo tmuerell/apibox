@@ -1,11 +1,10 @@
 <h2>Requests</h2>
 
-<table class="table">
+<table class="table table-sm">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Url</th>
-      <th>Method</th>
+      <th>Folder</th>
       <th></th>
     </tr>
   </thead>
@@ -14,8 +13,7 @@
     <% @requests.each do |request| %>
       <tr>
         <td><%= request.name %></td>
-        <td><%= request.url %></td>
-        <td><%= request.method %></td>
+        <td><%= request.folder.name %></td>
         <td><%= list_actions(request) %></td>
       </tr>
     <% end %>

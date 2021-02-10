@@ -12,5 +12,6 @@
 
   <body>
     <%= yield %>
+    <%= content_for?(:actions) ? yield(:actions) : standard_actions %>
   </body>
 </html>

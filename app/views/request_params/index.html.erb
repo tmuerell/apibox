@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Request Params</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Request</th>
+      <th>Name</th>
+      <th>Value</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @request_params.each do |request_param| %>
+      <tr>
+        <td><%= request_param.request_id %></td>
+        <td><%= request_param.name %></td>
+        <td><%= request_param.value %></td>
+        <td><%= link_to 'Show', request_param %></td>
+        <td><%= link_to 'Edit', edit_request_param_path(request_param) %></td>
+        <td><%= link_to 'Destroy', request_param, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Request Param', new_request_param_path %>

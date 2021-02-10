@@ -7,31 +7,46 @@
 
     <div class="card-body">
         <p>
-            <strong>Url:</strong>
-            <%= @request.url %>
+          <% if @request.certificate.present? %>
+          <span class="bi bi-file-lock-fill text-warning" title="Uses client certificate"></span>
+          <% end %>
+          <span class="badge badge-primary"><%= @request.method %></span>
+          <span class="url"><%= @request.url %></span>
         </p>
 
-        <p>
-            <strong>Method:</strong>
-            <%= @request.method %>
-        </p>
+        <% if @request.request_params.present? %>
+          <h5>Params</h5>
+          <ul>
+          <% for p in @request.request_params %>
+            <li><%= p.name %> = <%= p.value %></li>
+          <% end %>
+          </ul>
+        <% end %>
+
+        <% if @request.request_headers.present? %>
+          <h5>Headers</h5>
+          <ul>
+          <% for h in @request.request_headers %>
+            <li><%= h.name %> = <%= h.value %></li>
+          <% end %>
+          </ul>
+        <% end %>
 
         <% if @request.method.post? || @request.method.put? || @request.method.patch? %>
 
         <p>
-            <strong>Content type:</strong>
-            <%= @request.content_type %>
+            <strong>Body:</strong>
         </p>
 
-        <p>
-            <strong>Body:</strong>
-            <pre><code class="<%= @request.lang %>"><%= @request.body %></code></pre>
-            
-        </p>
+        <p><i><%= @request.content_type %></i></p>
+
+        <pre><code class="<%= @request.lang %>"><%= @request.body %></code></pre>
         <% end %>
-        <%= link_to 'Run Request', run_request_path(@request), method: :post, remote: true, class: 'btn btn-success' %>
+        <%= link_to 'Add Param', new_request_param_path(request_id: @request.id), class: 'btn btn-secondary' %>
+        <%= link_to 'Add Header', new_request_header_path(request_id: @request.id), class: 'btn btn-secondary' %>
+        <%= link_to 'Send request', run_request_path(@request), method: :post, remote: true, class: 'btn btn-success' %>
     </div>
 </div>
 <div id="run-result">
-    x
+    <i>Please run the request</i>
 </div>

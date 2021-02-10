@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Request:</strong>
+  <%= @request_param.request_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @request_param.name %>
+</p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @request_param.value %>
+</p>
+
+<%= link_to 'Edit', edit_request_param_path(@request_param) %> |
+<%= link_to 'Back', request_params_path %>

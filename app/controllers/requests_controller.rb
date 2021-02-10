@@ -23,13 +23,29 @@ class RequestsController < ApplicationController
       Faraday.new @request.url
     end
 
+    headers = { "Content-Type" => @request.content_type }
+    for h in @request.request_headers
+      headers[h.name] = h.value
+    end
+    params = {}
+    for p in @request.request_params
+      if params[p.name]
+        if !params[p.name].kind_of?(Array)
+          params[p.name] = [ params[p.name] ]
+        end
+        params[p.name] << p.value
+      else
+        params[p.name] = p.value
+      end
+    end
+
     if @request.method.get?
-      resp = f.get(@request.url)
+      resp = f.get(@request.url, params, headers)
     elsif @request.method.post?
       resp = f.post(
         @request.url,
         @request.body,
-        "Content-Type" => @request.content_type)
+        headers)
     else
       raise "Invalid method #{@request.method}"
     end

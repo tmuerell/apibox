@@ -3,6 +3,8 @@ class Request < ApplicationRecord
   
   belongs_to :folder
   belongs_to :certificate, optional: true
+  has_many :request_params
+  has_many :request_headers
 
   enumerize :method, in: [:get, :post, :patch, :put, :delete]
 

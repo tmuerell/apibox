@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_09_230556) do
+ActiveRecord::Schema.define(version: 2021_02_10_072945) do
 
   create_table "certificates", force: :cascade do |t|
     t.string "name"
@@ -28,6 +28,24 @@ ActiveRecord::Schema.define(version: 2021_02_09_230556) do
     t.index ["parent_id"], name: "index_folders_on_parent_id"
   end
 
+  create_table "request_headers", force: :cascade do |t|
+    t.integer "request_id", null: false
+    t.string "name"
+    t.text "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["request_id"], name: "index_request_headers_on_request_id"
+  end
+
+  create_table "request_params", force: :cascade do |t|
+    t.integer "request_id", null: false
+    t.string "name"
+    t.text "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["request_id"], name: "index_request_params_on_request_id"
+  end
+
   create_table "requests", force: :cascade do |t|
     t.string "name"
     t.string "url"
@@ -43,6 +61,8 @@ ActiveRecord::Schema.define(version: 2021_02_09_230556) do
   end
 
   add_foreign_key "folders", "folders", column: "parent_id"
+  add_foreign_key "request_headers", "requests"
+  add_foreign_key "request_params", "requests"
   add_foreign_key "requests", "certificates"
   add_foreign_key "requests", "folders"
 end

@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Request Headers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Request</th>
+      <th>Name</th>
+      <th>Value</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @request_headers.each do |request_header| %>
+      <tr>
+        <td><%= request_header.request_id %></td>
+        <td><%= request_header.name %></td>
+        <td><%= request_header.value %></td>
+        <td><%= link_to 'Show', request_header %></td>
+        <td><%= link_to 'Edit', edit_request_header_path(request_header) %></td>
+        <td><%= link_to 'Destroy', request_header, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Request Header', new_request_header_path %>

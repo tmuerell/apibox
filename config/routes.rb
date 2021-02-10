@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :request_headers
+  resources :request_params
   resources :certificates
   resources :requests do
     member do

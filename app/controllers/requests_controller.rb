@@ -16,7 +16,8 @@ class RequestsController < ApplicationController
       key = OpenSSL::PKey::RSA.new(@request.certificate.key)
       Faraday.new @request.url, :ssl => {
         :client_cert  => cert,
-        :client_key   => key
+        :client_key   => key,
+        :verify       => false
       }
     else
       Faraday.new @request.url

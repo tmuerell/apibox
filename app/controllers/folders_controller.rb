@@ -13,6 +13,7 @@ class FoldersController < ApplicationController
   # GET /folders/new
   def new
     @folder = Folder.new
+    @folder.parent = Folder.find(params[:folder_id]) if params[:folder_id].present?
   end
 
   # GET /folders/1/edit

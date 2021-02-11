@@ -6,6 +6,3 @@ before_install:
 
 services:
   - docker
-
-script:
-  - bundle exec rake test

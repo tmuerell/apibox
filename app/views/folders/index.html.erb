@@ -4,7 +4,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Parent</th>
       <th></th>
     </tr>
   </thead>
@@ -12,8 +11,7 @@
   <tbody>
     <% @folders.each do |folder| %>
       <tr>
-        <td><%= folder.name %></td>
-        <td><%= folder.parent_id %></td>
+        <td><%= link_to "<span class=\"bi bi-folder\"></span>&nbsp;#{folder.name}".html_safe, folder %></td>
         <td><%= list_actions(folder) %></td>
       </tr>
     <% end %>

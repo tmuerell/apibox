@@ -4,18 +4,13 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Folder</th>
       <th></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @requests.each do |request| %>
-      <tr>
-        <td><%= request.name %></td>
-        <td><%= request.folder.name %></td>
-        <td><%= list_actions(request) %></td>
-      </tr>
-    <% end %>
+    <%= render @requests %>
   </tbody>
 </table>
+
+<%= paginate @requests %>

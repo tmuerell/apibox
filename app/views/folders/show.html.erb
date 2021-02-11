@@ -1,15 +1,17 @@
-<p id="notice"><%= notice %></p>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <%= breadcrumbs(@folder) %>
+  </ol>
+</nav>
 
-<p>
-  <strong>Name:</strong>
-  <%= @folder.name %>
-</p>
-
-<ul>
-<% for r in @folder.requests %>
-  <li><%= link_to r.name, r %></li>
-<% end %>
-</ul>
-
-<%= link_to 'Edit', edit_folder_path(@folder) %> |
-<%= link_to 'Back', folders_path %>
+<table class="table table-sm table-striped">
+  <tbody>
+    <% for folder in @folder.children %>
+      <tr>
+        <td><%= link_to "<span class=\"bi bi-folder\"></span>&nbsp;#{folder.name}".html_safe, folder %></td>
+        <td><%= list_actions(folder) %></td>
+      </tr>
+    <% end %>
+    <%= render @folder.requests %>
+  </tbody>
+</table>

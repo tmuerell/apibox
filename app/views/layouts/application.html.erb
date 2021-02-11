@@ -14,7 +14,7 @@
   <body>
     <%= render 'layouts/navbar' %>
     <main>
-    <div class="container">
+    <div class="container mt-3">
     <%= yield %>
     <%= content_for?(:actions) ? yield(:actions) : standard_actions %>
     </div>

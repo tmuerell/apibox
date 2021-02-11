@@ -7,6 +7,7 @@ class Request < ApplicationRecord
   has_many :request_headers
 
   enumerize :method, in: [:get, :post, :patch, :put, :delete]
+  paginates_per 25
 
   def lang
     if content_type =~ /application\/json/

@@ -14,9 +14,9 @@ module Requestable
           Faraday.new url
         end
       
-      headers = { "Content-Type" => content_type }
+      headers = { "User-Agent": "APIBox v0.0.1", "Content-Type" => content_type }
       for h in all_request_headers
-        headers[h.name] = h.value
+        headers[h.name] = dynamic_values(h.value)
       end
       local_params = {}
       for p in all_request_params
@@ -24,9 +24,9 @@ module Requestable
           if !local_params[p.name].kind_of?(Array)
             local_params[p.name] = [ local_params[p.name] ]
           end
-          local_params[p.name] << p.value
+          local_params[p.name] << dynamic_values(p.value)
         else
-          local_params[p.name] = p.value
+          local_params[p.name] = dynamic_values(p.value)
         end
       end
       
@@ -52,6 +52,16 @@ module Requestable
       end
 
       ApiResponse.new(resp)
+    end
+
+    def dynamic_values(v)
+      if v =~ /^\$UUID$/
+        SecureRandom.uuid
+      elsif v =~ /^\$NOW$/
+        DateTime.now.iso8601
+      else
+        v
+      end
     end
 
     def lang

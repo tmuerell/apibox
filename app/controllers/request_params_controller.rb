@@ -13,7 +13,11 @@ class RequestParamsController < ApplicationController
   # GET /request_params/new
   def new
     @request_param = RequestParam.new
-    @request_param.request = Request.find(params[:request_id])
+    if params[:request_id].present?
+      @request_param.request = Request.find(params[:request_id])
+    else 
+      @request_param.request_example = RequestExample.find(params[:request_example_id])
+    end
   end
 
   # GET /request_params/1/edit
@@ -26,7 +30,7 @@ class RequestParamsController < ApplicationController
 
     respond_to do |format|
       if @request_param.save
-        format.html { redirect_to @request_param.request, notice: "Request param was successfully created." }
+        format.html { redirect_to target(@request_param), notice: "Request param was successfully created." }
         format.json { render :show, status: :created, location: @request_param }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +43,7 @@ class RequestParamsController < ApplicationController
   def update
     respond_to do |format|
       if @request_param.update(request_param_params)
-        format.html { redirect_to @request_param, notice: "Request param was successfully updated." }
+        format.html { redirect_to target(@request_param), notice: "Request param was successfully updated." }
         format.json { render :show, status: :ok, location: @request_param }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -50,9 +54,10 @@ class RequestParamsController < ApplicationController
 
   # DELETE /request_params/1 or /request_params/1.json
   def destroy
+    t = target(@request_param)
     @request_param.destroy
     respond_to do |format|
-      format.html { redirect_to request_params_url, notice: "Request param was successfully destroyed." }
+      format.html { redirect_to t, notice: "Request param was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -65,6 +70,10 @@ class RequestParamsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def request_param_params
-      params.require(:request_param).permit(:request_id, :name, :value)
+      params.require(:request_param).permit(:request_id, :request_example_id, :name, :value)
+    end
+
+    def target(p)
+      p.request.present? ? p.request : p.request_example
     end
 end

@@ -13,7 +13,11 @@ class RequestHeadersController < ApplicationController
   # GET /request_headers/new
   def new
     @request_header = RequestHeader.new
-    @request_header.request = Request.find(params[:request_id])
+    if params[:request_id].present?
+      @request_header.request = Request.find(params[:request_id])
+    else
+      @request_header.request_example = RequestExample.find(params[:request_example_id])
+    end
   end
 
   # GET /request_headers/1/edit
@@ -26,7 +30,7 @@ class RequestHeadersController < ApplicationController
 
     respond_to do |format|
       if @request_header.save
-        format.html { redirect_to @request_header.request, notice: "Request header was successfully created." }
+        format.html { redirect_to target(@request_header), notice: "Request header was successfully created." }
         format.json { render :show, status: :created, location: @request_header }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +43,7 @@ class RequestHeadersController < ApplicationController
   def update
     respond_to do |format|
       if @request_header.update(request_header_params)
-        format.html { redirect_to @request_header, notice: "Request header was successfully updated." }
+        format.html { redirect_to target(@request_header), notice: "Request header was successfully updated." }
         format.json { render :show, status: :ok, location: @request_header }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -50,9 +54,10 @@ class RequestHeadersController < ApplicationController
 
   # DELETE /request_headers/1 or /request_headers/1.json
   def destroy
+    t = target(@request_header)
     @request_header.destroy
     respond_to do |format|
-      format.html { redirect_to request_headers_url, notice: "Request header was successfully destroyed." }
+      format.html { redirect_to t, notice: "Request header was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -65,6 +70,10 @@ class RequestHeadersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def request_header_params
-      params.require(:request_header).permit(:request_id, :name, :value)
+      params.require(:request_header).permit(:request_id, :request_example_id, :name, :value)
+    end
+
+    def target(p)
+      p.request.present? ? p.request : p.request_example
     end
 end

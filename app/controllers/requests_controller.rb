@@ -11,46 +11,8 @@ class RequestsController < ApplicationController
   end
 
   def run
-    f = if @request.certificate.present?
-      cert = OpenSSL::X509::Certificate.new(@request.certificate.cert)
-      key = OpenSSL::PKey::RSA.new(@request.certificate.key)
-      Faraday.new @request.url, :ssl => {
-        :client_cert  => cert,
-        :client_key   => key,
-        :verify       => false
-      }
-    else
-      Faraday.new @request.url
-    end
-
-    headers = { "Content-Type" => @request.content_type }
-    for h in @request.request_headers
-      headers[h.name] = h.value
-    end
-    request_params = {}
-    for p in @request.request_params
-      if request_params[p.name]
-        if !request_params[p.name].kind_of?(Array)
-          request_params[p.name] = [ request_params[p.name] ]
-        end
-        request_params[p.name] << p.value
-      else
-        request_params[p.name] = p.value
-      end
-    end
-
-    if @request.method.get?
-      resp = f.get(@request.url, request_params, headers)
-    elsif @request.method.post?
-      resp = f.post(
-        @request.url,
-        @request.body,
-        headers)
-    else
-      raise "Invalid method #{@request.method}"
-    end
-
-    @resp = ApiResponse.new(resp)
+    @resp = @request.send_request
+    
     @debug = params[:debug]
 
     respond_to do |format|

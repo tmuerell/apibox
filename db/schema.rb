@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_10_072945) do
+ActiveRecord::Schema.define(version: 2021_02_13_222724) do
 
   create_table "certificates", force: :cascade do |t|
     t.string "name"
@@ -28,21 +28,35 @@ ActiveRecord::Schema.define(version: 2021_02_10_072945) do
     t.index ["parent_id"], name: "index_folders_on_parent_id"
   end
 
-  create_table "request_headers", force: :cascade do |t|
+  create_table "request_examples", force: :cascade do |t|
     t.integer "request_id", null: false
+    t.string "name"
+    t.string "content_type"
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["request_id"], name: "index_request_examples_on_request_id"
+  end
+
+  create_table "request_headers", force: :cascade do |t|
+    t.integer "request_id"
     t.string "name"
     t.text "value"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "request_example_id"
+    t.index ["request_example_id"], name: "index_request_headers_on_request_example_id"
     t.index ["request_id"], name: "index_request_headers_on_request_id"
   end
 
   create_table "request_params", force: :cascade do |t|
-    t.integer "request_id", null: false
+    t.integer "request_id"
     t.string "name"
     t.text "value"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "request_example_id"
+    t.index ["request_example_id"], name: "index_request_params_on_request_example_id"
     t.index ["request_id"], name: "index_request_params_on_request_id"
   end
 
@@ -61,7 +75,10 @@ ActiveRecord::Schema.define(version: 2021_02_10_072945) do
   end
 
   add_foreign_key "folders", "folders", column: "parent_id"
+  add_foreign_key "request_examples", "requests"
+  add_foreign_key "request_headers", "request_examples"
   add_foreign_key "request_headers", "requests"
+  add_foreign_key "request_params", "request_examples"
   add_foreign_key "request_params", "requests"
   add_foreign_key "requests", "certificates"
   add_foreign_key "requests", "folders"

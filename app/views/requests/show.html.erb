@@ -1,56 +1,34 @@
 <h2><%= @request.name %></h2>
 
-<div class="card">
+<%= render 'request_examples/request_detail', request: @request %>
+
+<div class="btn-group my-2">
+  <%= link_to 'Edit', edit_request_path(@request), class: 'btn btn-light' %>
+  <%= link_to 'Delete', @request, method: :delete, class: 'btn btn-danger', data: { confirm: "Really sure?" } %>
+  <%= link_to 'Clone to example', new_request_example_path(request_id: @request.id, clone: 1), class: 'btn btn-primary' %>
+  <%= link_to 'Add Param', new_request_param_path(request_id: @request.id), class: 'btn btn-primary' %>
+  <%= link_to 'Add Header', new_request_header_path(request_id: @request.id), class: 'btn btn-primary' %>
+  <%= link_to 'Send request', run_request_path(@request), method: :post, remote: true, class: 'btn btn-success' %>
+  <%= link_to 'Debug request', run_request_path(@request, debug: 1), method: :post, remote: true, class: 'btn btn-secondary' %>
+</div>
+
+<div class="card my-2">
     <div class="card-header">
-        Request
+        Examples
     </div>
 
     <div class="card-body">
-        <p>
-          <% if @request.certificate.present? %>
-          <span class="bi bi-file-lock-fill text-warning" title="Uses client certificate"></span>
-          <% end %>
-          <span class="badge badge-primary"><%= @request.method %></span>
-          <span class="url"><%= @request.url %></span>
-        </p>
-
-        <% if @request.request_params.present? %>
-          <h5>Params</h5>
-          <ul>
-          <% for p in @request.request_params %>
-            <li><%= p.name %> = <%= p.value %></li>
-          <% end %>
-          </ul>
-        <% end %>
-
-        <% if @request.request_headers.present? %>
-          <h5>Headers</h5>
-          <ul>
-          <% for h in @request.request_headers %>
-            <li><%= h.name %> = <%= h.value %></li>
-          <% end %>
-          </ul>
-        <% end %>
-
-        <% if @request.method.post? || @request.method.put? || @request.method.patch? %>
-
-        <p>
-            <strong>Body:</strong>
-        </p>
-
-        <p><i><%= @request.content_type %></i></p>
-
-        <pre><code class="<%= @request.lang %>"><%= @request.body %></code></pre>
-        <% end %>
-        <%= link_to 'Edit', edit_request_path(@request), class: 'btn btn-light' %>
-        <%= link_to 'Delete', @request, method: :delete, class: 'btn btn-danger', data: { confirm: "Really sure?" } %>
-        <%= link_to 'Add Param', new_request_param_path(request_id: @request.id), class: 'btn btn-primary' %>
-        <%= link_to 'Add Header', new_request_header_path(request_id: @request.id), class: 'btn btn-primary' %>
-        <%= link_to 'Send request', run_request_path(@request), method: :post, remote: true, class: 'btn btn-success' %>
-        <%= link_to 'Debug request', run_request_path(@request, debug: 1), method: :post, remote: true, class: 'btn btn-secondary' %>
+    <ul>
+    <% for e in @request.request_examples %>
+    <li><%= link_to e.name, e %></li>
+    <% end %>
+    </ul>
+    <%= link_to "New Example", new_request_example_path(request_id: @request.id), class: 'btn btn-primary' %>
     </div>
-</div>
+  </div>
+
 <div id="run-result" class="my-5">
 </div>
+
 
 <% content_for(:actions) { '&nbsp;'.html_safe } %>

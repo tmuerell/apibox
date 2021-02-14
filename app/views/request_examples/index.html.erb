@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Request Examples</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Request</th>
+      <th>Name</th>
+      <th>Content type</th>
+      <th>Body</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @request_examples.each do |request_example| %>
+      <tr>
+        <td><%= request_example.request_id %></td>
+        <td><%= request_example.name %></td>
+        <td><%= request_example.content_type %></td>
+        <td><%= request_example.body %></td>
+        <td><%= list_actions(request_example) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

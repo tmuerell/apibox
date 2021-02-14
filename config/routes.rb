@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :request_examples do
+    member do
+      post :run
+    end
+  end
   resources :request_headers
   resources :request_params
   resources :certificates

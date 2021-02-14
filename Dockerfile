@@ -7,6 +7,7 @@ RUN apt-get update -qq && apt-get install -y build-essential nodejs yarn
 ENV RAILS_SERVE_STATIC_FILES true
 ENV SECRET_KEY_BASE deadbeef
 ENV RAILS_ENV production
+ENV NODE_ENV production
 ENV RAILS_DB_BASE /db
 ENV APP_HOME /app
 RUN mkdir $APP_HOME

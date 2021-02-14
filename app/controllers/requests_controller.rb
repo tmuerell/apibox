@@ -23,6 +23,7 @@ class RequestsController < ApplicationController
   # GET /requests/new
   def new
     @request = Request.new
+    @request.folder = Folder.find(params[:folder_id]) if params[:folder_id].present?
   end
 
   # GET /requests/1/edit

@@ -1,19 +1,9 @@
-<p id="notice"><%= notice %></p>
+<h2><%= @certificate.name %></h2>
 
-<p>
-  <strong>Name:</strong>
-  <%= @certificate.name %>
-</p>
+<% c = OpenSSL::X509::Certificate.new(@certificate.cert) %>
 
-<p>
-  <strong>Cert:</strong>
-  <%= @certificate.cert %>
-</p>
-
-<p>
-  <strong>Key:</strong>
-  <%= @certificate.key %>
-</p>
-
-<%= link_to 'Edit', edit_certificate_path(@certificate) %> |
-<%= link_to 'Back', certificates_path %>
+<p><strong>Subject:</strong> <%= c.subject %></p>
+<p><strong>Issuer:</strong> <%= c.issuer %></p>
+<p><strong>Serial:</strong> <%= c.serial %></p>
+<p><strong>Not Before:</strong> <%= c.not_before %></p>
+<p><strong>Not After:</strong> <%= c.not_after %></p>

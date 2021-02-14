@@ -8,7 +8,7 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import hljs from 'highlight.js'
-// import 'css/site'
+import 'css/site'
 import 'jquery'
 import('src/plugins') // note the function usage!
 

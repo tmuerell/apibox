@@ -10,4 +10,14 @@ module FoldersHelper
         end
         res.reverse.join("").html_safe
     end
+
+    def folder_links(cur)
+        lst = cur ? cur.children : Folder.roots
+
+        ret = ""
+        for f in lst
+            ret << content_tag(:li, class: 'nav-item') { link_to f.name, f, class: 'nav-link' }
+        end
+        ret.html_safe
+    end
 end

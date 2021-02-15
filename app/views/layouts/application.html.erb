@@ -20,18 +20,14 @@
         <nav id="sidebar">
             <h5 class="m-3">Folders</h5>
             <ul class="nav flex-column">
-              <%= folder_links(nil) %>
+              <%= folder_links(nil, @request) %>
             </ul>
         </nav> <!-- /#sidebar-wrapper -->
 
         <main class="container">
-            <div class="row">
                 <%= render 'layouts/messages' %>
-            </div>
-            <div class="row">
                 <%= yield %>
                 <%= content_for?(:actions) ? yield(:actions) : standard_actions %>
-            </div>
         </main>
     </div>
 </body>

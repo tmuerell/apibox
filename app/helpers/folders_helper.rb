@@ -11,12 +11,15 @@ module FoldersHelper
         res.reverse.join("").html_safe
     end
 
-    def folder_links(cur)
+    def folder_links(cur, active_item)
         lst = cur ? cur.children : Folder.roots
 
         ret = ""
         for f in lst
-            ret << content_tag(:li, class: 'nav-item') { link_to f.name, f, class: 'nav-link' }
+            active = active_item && f == active_item.folder
+            ret << content_tag(:li, class: 'nav-item' + (active ? ' active' : '')) do
+                link_to(f.name, f, class: 'nav-link') + content_tag(:ul, class: 'list-unstyled ml-2') { folder_links(f, active_item) }
+            end
         end
         ret.html_safe
     end

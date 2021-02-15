@@ -8,7 +8,7 @@ class Request < ApplicationRecord
   has_many :request_headers
   has_many :request_examples
 
-  validates_presence_of :name
+  validates_presence_of :name, :method
 
   enumerize :method, in: [:get, :post, :patch, :put, :delete]
   paginates_per 25

@@ -7,6 +7,7 @@ class Request < ApplicationRecord
   has_many :request_params
   has_many :request_headers
   has_many :request_examples
+  has_many :request_logs
 
   validates_presence_of :name, :method
 

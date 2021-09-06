@@ -1,9 +1,11 @@
 class ApiResponse
-    attr_reader :raw
+    attr_reader :raw, :raw_request, :request_identifier
     delegate :status, :headers, :body, to: :raw
 
-    def initialize(raw_resp)
-        @raw = raw_resp
+    def initialize(request_identifier, raw_request, raw_response)
+        @request_identifier = request_identifier
+        @raw_request = raw_request
+        @raw = raw_response
     end
 
     def success?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_13_222724) do
+ActiveRecord::Schema.define(version: 2021_09_06_050051) do
 
   create_table "certificates", force: :cascade do |t|
     t.string "name"
@@ -49,6 +49,17 @@ ActiveRecord::Schema.define(version: 2021_02_13_222724) do
     t.index ["request_id"], name: "index_request_headers_on_request_id"
   end
 
+  create_table "request_logs", force: :cascade do |t|
+    t.integer "request_id", null: false
+    t.text "outgoing_data"
+    t.text "incoming_data"
+    t.integer "status_code"
+    t.string "request_identifier"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["request_id"], name: "index_request_logs_on_request_id"
+  end
+
   create_table "request_params", force: :cascade do |t|
     t.integer "request_id"
     t.string "name"
@@ -78,6 +89,7 @@ ActiveRecord::Schema.define(version: 2021_02_13_222724) do
   add_foreign_key "request_examples", "requests"
   add_foreign_key "request_headers", "request_examples"
   add_foreign_key "request_headers", "requests"
+  add_foreign_key "request_logs", "requests"
   add_foreign_key "request_params", "request_examples"
   add_foreign_key "request_params", "requests"
   add_foreign_key "requests", "certificates"

@@ -12,6 +12,13 @@ class RequestsController < ApplicationController
 
   def run
     @resp = @request.send_request
+
+    RequestLog.create!(
+      request: @request,
+      outgoing_data: @resp.raw_request.to_json,
+      incoming_data: @resp.raw.to_json,
+      request_identifier: @resp.request_identifier
+    )
     
     @debug = params[:debug]
 

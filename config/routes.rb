@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :request_logs
   resources :request_examples do
     member do
       post :run
@@ -10,6 +11,7 @@ Rails.application.routes.draw do
   resources :requests do
     member do
       post :run
+      get :log
     end
   end
   resources :folders

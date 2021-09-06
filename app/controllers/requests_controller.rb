@@ -1,5 +1,5 @@
 class RequestsController < ApplicationController
-  before_action :set_request, only: %i[ show edit update destroy run]
+  before_action :set_request, only: %i[ show log edit update destroy run]
 
   # GET /requests or /requests.json
   def index
@@ -10,11 +10,16 @@ class RequestsController < ApplicationController
   def show
   end
 
+  def log
+    @request_logs = @request.request_logs.order('created_at DESC')
+  end
+
   def run
     @resp = @request.send_request
 
     RequestLog.create!(
       request: @request,
+      status_code: @resp.status,
       outgoing_data: @resp.raw_request.to_json,
       incoming_data: @resp.raw.to_json,
       request_identifier: @resp.request_identifier

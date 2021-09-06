@@ -1,0 +1,9 @@
+<h1>Log for <%= @request_log.request.name %></h1>
+
+<h2>Request</h2>
+
+<pre class="request-body"><code class="json"><%= JSON.pretty_generate(JSON.parse(@request_log.outgoing_data)) %></code></pre>
+
+<h2>Response</h2>
+
+<pre class="request-body"><code class="json"><%= JSON.pretty_generate(JSON.parse(@request_log.incoming_data)) %></code></pre>

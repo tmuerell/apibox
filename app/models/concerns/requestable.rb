@@ -4,8 +4,10 @@ module Requestable
     def send_request
       request_identifier = SecureRandom.uuid
       options = {
-        :timeout      => 20,
-        :open_timeout => 20
+        request: {
+          timeout: 20,
+          open_timeout: 20
+        }
       }
       if certificate.present?
           cert = OpenSSL::X509::Certificate.new(certificate.cert)
@@ -16,7 +18,7 @@ module Requestable
             :verify       => false
           })
       end
-      f = Faraday.new url, options
+      f = Faraday.new(url, options)
 
       headers = { "User-Agent": "APIBox v0.0.1", "Content-Type" => content_type }
       for h in all_request_headers

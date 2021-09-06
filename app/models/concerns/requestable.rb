@@ -3,18 +3,21 @@ module Requestable
 
     def send_request
       request_identifier = SecureRandom.uuid
-      f = if certificate.present?
+      options = {
+        :timeout      => 20,
+        :open_timeout => 20
+      }
+      if certificate.present?
           cert = OpenSSL::X509::Certificate.new(certificate.cert)
           key = OpenSSL::PKey::RSA.new(certificate.key)
-          Faraday.new url, :ssl => {
+          options.merge!(:ssl => {
             :client_cert  => cert,
             :client_key   => key,
             :verify       => false
-          }
-        else
-          Faraday.new url
-        end
-      
+          })
+      end
+      f = Faraday.new url, options
+
       headers = { "User-Agent": "APIBox v0.0.1", "Content-Type" => content_type }
       for h in all_request_headers
         headers[h.name] = dynamic_values(request_identifier, h.value)

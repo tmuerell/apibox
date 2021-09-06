@@ -11,7 +11,7 @@ class RequestsController < ApplicationController
   end
 
   def log
-    @request_logs = @request.request_logs.order('created_at DESC')
+    @request_logs = @request.request_logs.order('created_at DESC').page params[:page]
   end
 
   def run

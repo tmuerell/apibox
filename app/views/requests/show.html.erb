@@ -25,6 +25,7 @@
   <%= link_to 'Add Header', new_request_header_path(request_id: @request.id), class: 'btn btn-primary' %>
   <%= link_to 'Send request', run_request_path(@request), method: :post, remote: true, class: 'btn btn-success' %>
   <%= link_to 'Debug request', run_request_path(@request, debug: 1), method: :post, remote: true, class: 'btn btn-secondary' %>
+  <%= link_to 'Log', log_request_path(@request), class: 'btn btn-light' %>
 </div>
 
 <div class="card my-2">

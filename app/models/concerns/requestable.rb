@@ -40,29 +40,37 @@ module Requestable
         url: url,
         headers: headers
       }
-      
-      if method.get?
-        resp = f.get(url, local_params, headers)
-      elsif method.post?
-        raw_request[:body] = body
-        resp = f.post(
-          url,
-          body,
-          headers)
-      elsif method.put?
-        raw_request[:body] = body
-        resp = f.put(
-          url,
-          body,
-          headers)
-      elsif method.patch?
-        raw_request[:body] = body
-        resp = f.patch(
-          url,
-          body,
-          headers)
-      else
-        raise "Invalid method #{method}"
+
+      begin
+        if method.get?
+          resp = f.get(url, local_params, headers)
+        elsif method.post?
+          raw_request[:body] = body
+          resp = f.post(
+            url,
+            body,
+            headers)
+        elsif method.put?
+          raw_request[:body] = body
+          resp = f.put(
+            url,
+            body,
+            headers)
+        elsif method.patch?
+          raw_request[:body] = body
+          resp = f.patch(
+            url,
+            body,
+            headers)
+        else
+          raise "Invalid method #{method}"
+        end
+      rescue Object => o
+        response = {
+          status: -1,
+          error: o.to_json
+        }
+        return ApiResponse.new(request_identifier, raw_request, response)
       end
 
       ApiResponse.new(request_identifier, raw_request, resp)

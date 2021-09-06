@@ -1,6 +1,6 @@
 class ApiResponse
     attr_reader :raw, :raw_request, :request_identifier
-    delegate :status, :headers, :body, to: :raw
+    delegate :headers, :body, to: :raw
 
     def initialize(request_identifier, raw_request, raw_response)
         @request_identifier = request_identifier
@@ -8,8 +8,20 @@ class ApiResponse
         @raw = raw_response
     end
 
+    def has_response?
+        @raw.respond_to?(:status)
+    end
+
+    def status
+        if has_response?
+            @raw.status
+        else
+            -1
+        end
+    end
+
     def success?
-        @raw.status < 400
+        self.status < 400 && self.status > 0
     end
 
     def resp_class

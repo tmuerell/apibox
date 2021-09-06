@@ -1,27 +1,28 @@
-<div class="card mt-5 border-<%= @resp.resp_class %>">   
-    <div class="card-header">
-        Response
-    </div>
+<div class="card mt-5 border-<%= @resp.resp_class %>">
+  <div class="card-header">
+    Response
+  </div>
 
-    <div class="card-body text-<%= @resp.resp_class %>">
-        <p>HTTP-Status: <%= @resp.status %>
+  <div class="card-body text-<%= @resp.resp_class %>">
+    <p>HTTP-Status: <%= @resp.status %>
+  </div>
+
+  <% if @resp.has_response? %>
+    <div class="card-body">
+      <ul>
+        <% for h in @resp.headers %>
+          <li><%= h[0] %>: <%= h[1] %></li>
+        <% end %>
+      </ul>
     </div>
     <div class="card-body">
-        <ul>
-            <% for h in @resp.headers %>
-            <li><%= h[0] %>: <%= h[1] %></li>
-            <% end %>
-        </ul>
-    </div>
-    <div class="card-body">
-        <pre><code class="<%= @resp.lang %>"><%= @resp.pretty_body %></code></pre>
-    </div>
+      <pre><code class="<%= @resp.lang %>"><%= @resp.pretty_body %></code></pre>
     </div>
 
     <% if @debug %>
       <pre><%= debug(@resp.raw) %></pre>
     <% end %>
+  <% end %>
 </div>
-
 
     

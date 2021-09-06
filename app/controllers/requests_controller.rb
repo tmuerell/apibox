@@ -24,7 +24,7 @@ class RequestsController < ApplicationController
       incoming_data: @resp.raw.to_json,
       request_identifier: @resp.request_identifier
     )
-    
+
     @debug = params[:debug]
 
     respond_to do |format|

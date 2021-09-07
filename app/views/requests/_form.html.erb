@@ -8,7 +8,9 @@
     <%= f.input :url %>
     <%= f.input :method %>
     <%= f.input :content_type %>
-    <%= f.input :body %>
+    <%= f.input :body, input_html: { rows: 20 } %>
+    <%= f.input :timeout %>
+    <%= f.input :open_timeout %>
     <%= f.association :folder %>
     <%= f.association :certificate %>
   </div>

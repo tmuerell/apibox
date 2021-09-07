@@ -12,7 +12,16 @@ class RequestExamplesController < ApplicationController
 
   def run
     @resp = @request_example.send_request
-    
+
+    RequestLog.create!(
+      request: @request_example.request,
+      request_example: @request_example,
+      status_code: @resp.status,
+      outgoing_data: @resp.raw_request.to_json,
+      incoming_data: @resp.raw.to_json,
+      request_identifier: @resp.request_identifier
+    )
+
     @debug = params[:debug]
 
     respond_to do |format|

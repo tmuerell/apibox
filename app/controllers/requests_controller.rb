@@ -87,6 +87,6 @@ class RequestsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def request_params
-      params.require(:request).permit(:name, :url, :method, :content_type, :body, :folder_id, :certificate_id)
+      params.require(:request).permit(:name, :url, :method, :content_type, :body, :folder_id, :certificate_id, :timeout, :open_timeout)
     end
 end

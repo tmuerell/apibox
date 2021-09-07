@@ -1,4 +1,7 @@
 <tr>
     <td><%= link_to "<span class=\"bi bi-file-code\"></span>&nbsp;#{request.name}".html_safe, request %></td>
-    <td><%= list_actions(request) %></td>
+    <td>
+      <%= link_to "Show", request, class: 'btn btn-sm btn-light' %>
+      <%= link_to "Edit", edit_request_path(request), class: 'btn btn-sm btn-light' %>
+    </td>
 </tr>

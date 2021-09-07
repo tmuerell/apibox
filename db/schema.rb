@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_06_050051) do
+ActiveRecord::Schema.define(version: 2021_09_07_053424) do
 
   create_table "certificates", force: :cascade do |t|
     t.string "name"
@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(version: 2021_09_06_050051) do
     t.string "request_identifier"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "request_example_id"
+    t.index ["request_example_id"], name: "index_request_logs_on_request_example_id"
     t.index ["request_id"], name: "index_request_logs_on_request_id"
   end
 
@@ -81,6 +83,8 @@ ActiveRecord::Schema.define(version: 2021_09_06_050051) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "certificate_id"
+    t.integer "timeout", default: 30, null: false
+    t.integer "open_timeout", default: 30, null: false
     t.index ["certificate_id"], name: "index_requests_on_certificate_id"
     t.index ["folder_id"], name: "index_requests_on_folder_id"
   end
@@ -89,6 +93,7 @@ ActiveRecord::Schema.define(version: 2021_09_06_050051) do
   add_foreign_key "request_examples", "requests"
   add_foreign_key "request_headers", "request_examples"
   add_foreign_key "request_headers", "requests"
+  add_foreign_key "request_logs", "request_examples"
   add_foreign_key "request_logs", "requests"
   add_foreign_key "request_params", "request_examples"
   add_foreign_key "request_params", "requests"

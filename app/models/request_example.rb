@@ -6,6 +6,7 @@ class RequestExample < ApplicationRecord
   belongs_to :request
   has_many :request_params
   has_many :request_headers
+  has_many :request_logs
 
   validates_presence_of :name
 

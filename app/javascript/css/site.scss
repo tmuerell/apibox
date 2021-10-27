@@ -12,15 +12,21 @@
     min-width: 250px;
     max-width: 250px;
     min-height: 100vh;
-    background: #a7a7a7;
+    background: #f1fffb;
     color: rgb(75, 75, 75);
     transition: all 0.3s;
 
     a {
-        color: rgb(228, 228, 228);
+        color: #333;
+        text-decoration: none;
     }
 
-    a.active {
-        color: #333;
+    a:hover {
+        color: #aaa;
+    }
+
+    li li {
+        font-size: 90%;
+        padding: 0 0 0 1em;
     }
 }

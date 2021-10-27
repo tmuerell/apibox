@@ -18,7 +18,7 @@ module FoldersHelper
         for f in lst
             active = active_item && f == active_item.folder
             ret << content_tag(:li, class: 'nav-item') do
-                link_to(f.name, f, class: 'nav-link' + (active ? ' active' : '')) + content_tag(:ul, class: 'pl-2 list-unstyled') { folder_links(f, active_item) }
+                link_to(f.name, f, class: 'ps-3' + (active ? ' active' : '')) + content_tag(:ul, class: 'pl-2 list-unstyled') { folder_links(f, active_item) }
             end
         end
         ret.html_safe

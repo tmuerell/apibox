@@ -1,20 +1,6 @@
-<div class="d-flex">
-    <h2 class="flex-grow-1"><%= @request.name %></h2>
+<h2><%= @request.name %></h2>
 
-    <div>
-        <div class="btn-group btn-group-sm">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Examples
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                <% for e in @request.request_examples %>
-                <%= link_to e.name, e, class: 'dropdown-item' %>
-                <% end %>
-            </div>
-        </div>
-    </div>
-</div>
-
+<%= render 'request_examples/request_examples', request: @request %>
 <%= render 'request_examples/request_detail', request: @request %>
 
 <div class="btn-group my-2">
@@ -29,19 +15,19 @@
 </div>
 
 <div class="card my-2">
-    <div class="card-header">
-        Examples
-    </div>
+  <div class="card-header">
+    Examples
+  </div>
 
-    <div class="card-body">
+  <div class="card-body">
     <ul>
-    <% for e in @request.request_examples %>
-    <li><%= link_to e.name, e %></li>
-    <% end %>
+      <% for e in @request.request_examples %>
+        <li><%= link_to e.name, e %></li>
+      <% end %>
     </ul>
     <%= link_to "New Example", new_request_example_path(request_id: @request.id), class: 'btn btn-primary' %>
-    </div>
   </div>
+</div>
 
 <div id="run-result" class="my-5">
 </div>

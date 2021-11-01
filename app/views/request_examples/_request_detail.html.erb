@@ -1,44 +1,71 @@
 <div class="card">
-    <div class="card-header">
-        Request
-    </div>
-    <div class="card-body">
-        <p>
-            <% if request.certificate.present? %>
-            <span class="bi bi-file-lock-fill text-warning" title="Uses client certificate"></span>
-            <% end %>
-            <span class="badge badge-primary"><%= request.method.upcase %></span>
-            <span class="url"><%= request.url %></span>
-        </p>
-        <% if !request.all_request_params.empty? %>
-        <h5>Params</h5>
-        <ul>
-            <% for p in request.all_request_params %>
-            <li><%= p.name %> = <%= p.value %>
-                (<%= link_to "Edit", edit_request_param_path(p) %> | <%= link_to "Delete", p, method: :delete, data: { confirm: 'Are you sure?' } %>)
-            </li>
-            <% end %>
-        </ul>
+  <div class="card-header">
+    <span class="badge bg-primary"><%= request.method.upcase %></span>
+    <span class="url"><%= request.url %></span>
+    <% if request.certificate.present? %>
+      <span class="bi bi-file-lock-fill text-warning" title="Uses client certificate"></span>
+    <% end %>
+  </div>
+  <div class="card-body">
+    <% if !request.all_request_params.empty? %>
+      <h5>Params</h5>
+      <table class="table table-sm table-striped">
+        <% for p in request.all_request_params %>
+          <tr>
+            <td class="col-5"><%= p.name %></td>
+            <td class="col-6"><%= p.value %></td>
+            <td class="col-1 text-end"><%= link_to content_tag('span', nil, class: 'bi bi-wrench'), edit_request_param_path(p) %> <%= link_to content_tag('span', nil, class: 'bi bi-trash'), p, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
         <% end %>
-        <% if !request.all_request_headers.empty? %>
-        <h5>Headers</h5>
-        <ul>
-            <% for h in request.all_request_headers %>
-            <li><%= h.name %> = <%= h.value %>
-            (<%= link_to "Edit", edit_request_header_path(h) %> | <%= link_to "Delete", h, method: :delete, data: { confirm: 'Are you sure?' } %>)
-            </li>
-            <% end %>
-        </ul>
+      </table>
+      <table class="table table-sm table-striped">
+        <%= form_for(request.request_params.new, remote: true) do |form| %>
+          <%= form.hidden_field :request_id %>
+          <%= form.hidden_field :request_example_id %>
+          <tr>
+            <td class="col-5"><%= form.text_field :name, placeholder: 'New param' %></td>
+            <td class="col-6"><%= form.text_field :value, placeholder: 'New value' %></td>
+            <td class="col-1 text-end">
+              <%= form.submit 'Add', class: 'btn-primary' %>
+            </td>
+          </tr>
         <% end %>
-        <% if request.method.post? || request.method.put? || request.method.patch? %>
-
-        <p>
-            <strong>Body:</strong>
-        </p>
-
-        <p><i><%= request.content_type %></i></p>
-
-        <pre class="request-body"><code class="<%= request.lang %>"><%= request.body %></code></pre>
+      </table>
+    <% end %>
+    <% if !request.all_request_headers.empty? %>
+      <h5>Headers</h5>
+      <table class="table table-sm table-striped">
+        <% for h in request.all_request_headers %>
+          <tr>
+            <td class="col-5"><%= h.name %></td>
+            <td class="col-6"><%= h.value %></td>
+            <td class="col-1 text-end"><%= link_to content_tag('span', nil, class: 'bi bi-wrench'), edit_request_header_path(h) %> <%= link_to content_tag('span', nil, class: 'bi bi-trash'), h, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
         <% end %>
-    </div>
+      </table>
+      <table class="table table-sm table-striped">
+        <%= form_for(request.request_headers.new, remote: true) do |form| %>
+          <%= form.hidden_field :request_id %>
+          <%= form.hidden_field :request_example_id %>
+          <tr>
+            <td class="col-5"><%= form.text_field :name, placeholder: 'New header' %></td>
+            <td class="col-6"><%= form.text_field :value, placeholder: 'New value' %></td>
+            <td class="col-1 text-end">
+              <%= form.submit 'Add', class: 'btn-primary' %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+    <% if request.method.post? || request.method.put? || request.method.patch? %>
+
+      <p>
+        <strong>Body:</strong>
+      </p>
+
+      <p><i><%= request.content_type %></i></p>
+
+      <pre class="request-body"><code class="<%= request.lang %>"><%= request.body %></code></pre>
+    <% end %>
+  </div>
 </div>

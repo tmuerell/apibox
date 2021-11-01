@@ -18,13 +18,13 @@
     <div class="wrapper d-flex">
         <!-- Sidebar -->
         <nav id="sidebar">
+            <% if content_for?(:sidebar) %>
+              <%= yield(:sidebar) %>
+            <% end %>
             <h5 class="m-3">Folders</h5>
             <ul class="nav flex-column folder-links">
               <%= folder_links(nil, @request) %>
             </ul>
-            <% if content_for?(:sidebar) %>
-              <%= yield(:sidebar) %>
-            <% end %>
         </nav> <!-- /#sidebar-wrapper -->
 
         <main class="container">

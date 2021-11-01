@@ -1,15 +1,17 @@
 <% if request.request_examples.count > 0 %>
   <% content_for(:sidebar) do %>
-    <h5 class="m-3">Examples</h5>
+    <nav class="examples pt-2 pb-3">
+      <h5 class="m-3">Examples</h5>
 
-    <ul class="nav flex-column">
-      <li class="nav-item ps-3"><%= link_to request.name, request %>
-        <ul class="nav flex-column">
-          <% for e in request.request_examples %>
-            <li class="nav-item"><%= link_to e.name, e %></li>
-          <% end %>
-        </ul>
-      </li>
-    </ul>
+      <ul class="nav flex-column">
+        <li class="nav-item ps-3"><%= link_to request.name, request %>
+          <ul class="nav flex-column">
+            <% for e in request.request_examples %>
+              <li class="nav-item"><%= link_to e.name, e %></li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+    </nav>
   <% end %>
 <% end %>

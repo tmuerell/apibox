@@ -2,37 +2,39 @@
 <html lang="en">
 
 <head>
-    <title>APIBox</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+  <title>APIBox</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_pack_tag 'application', media: 'all' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_pack_tag 'application', media: 'all' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
 
 <body>
-    <%= render 'layouts/navbar' %>
+<%= render 'layouts/navbar' %>
 
-    <div class="wrapper d-flex">
-        <!-- Sidebar -->
-        <nav id="sidebar">
-            <% if content_for?(:sidebar) %>
-              <%= yield(:sidebar) %>
-            <% end %>
-            <h5 class="m-3">Folders</h5>
-            <ul class="nav flex-column folder-links">
-              <%= folder_links(nil, @request) %>
-            </ul>
-        </nav> <!-- /#sidebar-wrapper -->
+<div class="wrapper d-flex">
+  <div id="sidebar">
+    <% if content_for?(:sidebar) %>
+      <%= yield(:sidebar) %>
+    <% end %>
+    <!-- Sidebar -->
+    <nav id="sidebarFolders" class="py-2">
+      <h5 class="m-3">Folders</h5>
+      <ul class="nav flex-column folder-links">
+        <%= folder_links(nil, @request) %>
+      </ul>
+    </nav> <!-- /#sidebar-wrapper -->
+  </div>
 
-        <main class="container">
-                <%= render 'layouts/messages' %>
-                <%= yield %>
-                <%= content_for?(:actions) ? yield(:actions) : standard_actions %>
-        </main>
-    </div>
+  <main class="container">
+    <%= render 'layouts/messages' %>
+    <%= yield %>
+    <%= content_for?(:actions) ? yield(:actions) : standard_actions %>
+  </main>
+</div>
 </body>
 
 </html>

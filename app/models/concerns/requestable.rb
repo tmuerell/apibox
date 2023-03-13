@@ -38,7 +38,8 @@ module Requestable
 
       raw_request = {
         url: url,
-        headers: headers
+        headers: headers,
+        params: local_params
       }
 
       begin

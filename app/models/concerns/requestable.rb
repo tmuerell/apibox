@@ -20,7 +20,10 @@ module Requestable
       end
       f = Faraday.new(url, options)
 
-      headers = { "User-Agent": "APIBox v0.0.1", "Content-Type" => content_type }
+      headers = { "User-Agent": "APIBox v0.0.1" }
+      unless method.get? || method.delete?
+        headers["Content-Type"] = content_type
+      end
       for h in all_request_headers
         headers[h.name] = dynamic_values(request_identifier, h.value)
       end

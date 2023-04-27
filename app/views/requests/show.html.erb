@@ -53,20 +53,25 @@
 <div class="accordion" id="accordionExample">
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingCurl">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCurl" aria-expanded="true" aria-controls="accordionCurl">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCurl" aria-expanded="true" aria-controls="accordionCurl">
         cURL
       </button>
     </h2>
-    <div id="accordionCurl" class="accordion-collapse collapse show" aria-labelledby="headingCurl">
+    <div id="accordionCurl" class="accordion-collapse collapse" aria-labelledby="headingCurl">
       <div class="accordion-body">
 <pre>
       <% if @request.method.post? %>
-curl -X POST "<%= @request.url %>?<%= query_string %>" \
+curl -X POST "<%= @request.url %><%= query_string.present? ? "?#{query_string}" : "" %>" \
 <% for h in @request.request_headers.select { |p| p.id } %>
-  -H "<%= h.name %>: <%= h.value %>" \
+  -H "<%= h.name %>: <%= dynamic_values(h.value) %>" \
 <% end  %>
   -H "Content-Type: <%= @request.content_type %>" \
   --data '<%= @request.body %>'
+<% elsif @request.method.get? %>
+curl -X GET "<%= @request.url %><%= query_string.present? ? "?#{query_string}" : "" %>" \
+    <% for h in @request.request_headers.select { |p| p.id } %>
+  -H "<%= h.name %>: <%= dynamic_values(h.value) %>" \
+<% end  %>
 <% else %>
 # Not yet supported
 <% end %>

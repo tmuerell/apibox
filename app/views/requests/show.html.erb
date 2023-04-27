@@ -33,6 +33,52 @@
 <div id="run-result" class="my-5">
 </div>
 
+<%= console %>
+
+<%
+  require 'cgi'
+
+  def dynamic_values(v)
+    if v =~ /^\$UUID$/
+      SecureRandom.uuid
+    elsif v =~ /^\$RID$/
+      SecureRandom.uuid
+    elsif v =~ /^\$NOW$/
+      DateTime.now.iso8601
+    else
+      v
+    end
+  end
+
+  query_string = @request.request_params.select { |p| p.id }.map { |p| "#{CGI.escape(p.name)}=#{CGI.escape(dynamic_values(p.value))}" }.join("&") %>
+
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingCurl">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCurl" aria-expanded="true" aria-controls="accordionCurl">
+        cURL
+      </button>
+    </h2>
+    <div id="accordionCurl" class="accordion-collapse collapse show" aria-labelledby="headingCurl">
+      <div class="accordion-body">
+<pre>
+      <% if @request.method.post? %>
+curl -X POST "<%= @request.url %>?<%= query_string %>" \
+<% for h in @request.request_headers.select { |p| p.id } %>
+  -H "<%= h.name %>: <%= h.value %>" \
+<% end  %>
+  -H "Content-Type: <%= @request.content_type %>" \
+  --data '<%= @request.body %>'
+<% else %>
+# Not yet supported
+<% end %>
+</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="card my-2">
   <div class="card-header">
     Examples

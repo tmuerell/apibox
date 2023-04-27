@@ -4,9 +4,9 @@ class RequestExample < ApplicationRecord
   delegate :certificate, :url, :method, to: :request
 
   belongs_to :request
-  has_many :request_params
-  has_many :request_headers
-  has_many :request_logs
+  has_many :request_params, dependent: :destroy
+  has_many :request_headers, dependent: :destroy
+  has_many :request_logs, dependent: :destroy
 
   validates_presence_of :name
 
@@ -15,6 +15,6 @@ class RequestExample < ApplicationRecord
   end
 
   def all_request_params
-    request.request_params + request_params
+    request_params
   end
 end

@@ -38,9 +38,13 @@ class RequestExamplesController < ApplicationController
       if params[:request_id].present?
         req = Request.find(params[:request_id])
         ref = req
+        @clone_id = req.id
+        @clone_type = 'Request'
       else
         req = RequestExample.find(params[:request_example_id])
         ref = req.request
+        @clone_id = req.id
+        @clone_type = 'RequestExample'
       end
       @request_example.request = ref
       @request_example.content_type = req.content_type
@@ -58,8 +62,28 @@ class RequestExamplesController < ApplicationController
   def create
     @request_example = RequestExample.new(request_example_params)
 
+    success = @request_example.save
+
+    if params[:clone_id]
+      req = nil
+      if params[:clone_type] == 'Request'
+        req = Request.find(params[:clone_id])
+      end
+      if params[:clone_type] == 'RequestExample'
+        req = RequestExample.find(params[:clone_id])
+      end
+
+      req.request_params.each do |p|
+        rp = RequestParam.new
+        rp.request_example = @request_example
+        rp.name = p.name
+        rp.value = p.value
+        rp.save!
+      end
+    end
+
     respond_to do |format|
-      if @request_example.save
+      if success
         format.html { redirect_to @request_example, notice: "Request example was successfully created." }
         format.json { render :show, status: :created, location: @request_example }
       else
@@ -84,9 +108,10 @@ class RequestExamplesController < ApplicationController
 
   # DELETE /request_examples/1 or /request_examples/1.json
   def destroy
+    req = @request_example.request
     @request_example.destroy
     respond_to do |format|
-      format.html { redirect_to request_examples_url, notice: "Request example was successfully destroyed." }
+      format.html { redirect_to req, notice: "Request example was successfully destroyed." }
       format.json { head :no_content }
     end
   end

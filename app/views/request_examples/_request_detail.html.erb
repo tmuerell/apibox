@@ -69,3 +69,30 @@
     <% end %>
   </div>
 </div>
+
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingCurl">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCurl" aria-expanded="true" aria-controls="accordionCurl">
+        cURL
+      </button>
+    </h2>
+    <div id="accordionCurl" class="accordion-collapse collapse" aria-labelledby="headingCurl">
+      <div class="accordion-body">
+        <pre><code class="bash"><%= request.generate_curl %></code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingXh">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionXh" aria-expanded="true" aria-controls="accordionXh">
+        xh
+      </button>
+    </h2>
+    <div id="accordionXh" class="accordion-collapse collapse" aria-labelledby="accordionXh">
+      <div class="accordion-body">
+        <pre><code class="bash"><%= request.generate_xh %></code></pre>
+      </div>
+    </div>
+  </div>
+</div>
